@@ -13,13 +13,17 @@ package com.example.administrator.myapplication;
 
 public class RadixSort {
 
-    private static RadixSort sortIntance;
+    private static volatile RadixSort sortIntance;
 
     private RadixSort() {}
 
-    public static synchronized RadixSort getInstance(){
+    public static RadixSort getInstance(){
         if (sortIntance == null){
-            sortIntance = new RadixSort();
+            synchronized (RadixSort.class){
+                if (sortIntance == null){
+                    sortIntance = new RadixSort();
+                }
+            }
         }
         return sortIntance;
     }

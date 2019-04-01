@@ -12,11 +12,11 @@ package com.example.administrator.myapplication;
 
 public class BubbleSort {
 
-    private static BubbleSort sortIntance;
+    private static volatile BubbleSort sortIntance;
 
     private BubbleSort() {}
 
-    public static synchronized BubbleSort getInstance(){
+    public static BubbleSort getInstance(){
         if (sortIntance == null){
             synchronized (BubbleSort.class){
                 if (sortIntance == null){
@@ -28,8 +28,6 @@ public class BubbleSort {
     }
 
     public void sort(int[] arr){
-        arr = new int[]{9, 8, 7, 6, 5, 4, 3, 2, 1};
-
         for (int i = arr.length; i >= 0 ; i--) {
             boolean flag = true;
             for (int j = 0; j < i - 1; j++) {

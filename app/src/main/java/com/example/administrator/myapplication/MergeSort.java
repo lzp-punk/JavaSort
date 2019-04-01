@@ -16,19 +16,22 @@ import java.util.logging.Logger;
 
 public class MergeSort {
 
-    private static MergeSort sortIntance;
+    private static volatile MergeSort sortIntance;
 
     private MergeSort() {}
 
-    public static synchronized MergeSort getInstance(){
+    public static  MergeSort getInstance(){
         if (sortIntance == null){
-            sortIntance = new MergeSort();
+            synchronized (MergeSort.class){
+                if (sortIntance == null){
+                    sortIntance = new MergeSort();
+                }
+            }
         }
         return sortIntance;
     }
 
     public void sort(int[] arr){
-        arr = new int[]{9, 8, 7, 6, 5, 4, 3, 2, 1};
         int[] temp = new int[arr.length];
         sort(arr, temp, 0, arr.length - 1);
     }

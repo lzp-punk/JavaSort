@@ -16,19 +16,22 @@ import android.util.Log;
 public class SelectSort {
 
 
-    private static SelectSort sortIntance;
+    private static volatile SelectSort sortIntance;
 
     private SelectSort() {}
 
-    public static synchronized SelectSort getInstance(){
+    public static SelectSort getInstance(){
         if (sortIntance == null){
-            sortIntance = new SelectSort();
+            synchronized (SelectSort.class){
+                if (sortIntance == null){
+                    sortIntance = new SelectSort();
+                }
+            }
         }
         return sortIntance;
     }
 
     public void sort(int[] arr){
-        arr = new int[]{9, 8, 7, 6, 5, 4, 3, 2, 1};
         for (int i = 0; i < arr.length - 1; i++) {
             int min = i;
             for (int j = i + 1; j < arr.length; j++) {

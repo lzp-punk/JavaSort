@@ -15,7 +15,7 @@ import android.util.Log;
 
 public class InsertSort {
 
-    private static InsertSort sortIntance;
+    private static volatile InsertSort sortIntance;
 
     private InsertSort() {}
 
@@ -31,7 +31,6 @@ public class InsertSort {
     }
 
     public void sort(int[] arr) {
-        arr = new int[]{9, 8, 7, 6, 5, 4, 3, 2, 1};
 
         for (int i = 1; i < arr.length; i++) {
             for (int j = i; j > 0; j--) {

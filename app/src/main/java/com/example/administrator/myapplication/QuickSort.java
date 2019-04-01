@@ -18,13 +18,17 @@ package com.example.administrator.myapplication;
 public class QuickSort {
 
 
-    private static QuickSort sortIntance;
+    private static volatile QuickSort sortIntance;
 
     private QuickSort() {}
 
-    public static synchronized QuickSort getInstance(){
+    public static QuickSort getInstance(){
         if (sortIntance == null){
-            sortIntance = new QuickSort();
+            synchronized (QuickSort.class){
+                if (sortIntance == null){
+                    sortIntance = new QuickSort();
+                }
+            }
         }
         return sortIntance;
     }
@@ -32,8 +36,6 @@ public class QuickSort {
 
 
     public void sort(int[] arr){
-        arr = new int[]{9, 8, 7, 6, 5, 4, 3, 2, 1};
-
         quickSort(arr, 0, arr.length - 1);
     }
 

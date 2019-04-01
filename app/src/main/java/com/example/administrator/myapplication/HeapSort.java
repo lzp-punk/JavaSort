@@ -13,7 +13,7 @@ package com.example.administrator.myapplication;
 
 public class HeapSort {
 
-    private static HeapSort sortIntance;
+    private static volatile HeapSort sortIntance;
 
     private HeapSort() {}
 
@@ -30,8 +30,6 @@ public class HeapSort {
 
 
     public void sort(int[] arr){
-        arr = new int[]{5, 2, 1, 6, 9, 4, 3, 8, 7};
-
         for (int i = arr.length - 1; i > 0; i--) {
             buildHeap(arr, i);
             SwapElementUtil.getInstance().swap(arr, 0, i);
@@ -59,20 +57,7 @@ public class HeapSort {
                 SwapElementUtil.getInstance().swap(arr, i, 2 * i + tempIndex);
             }
         }
-
     }
 
-
-    /**
-     * 交换数组元素
-     * @param arr
-     * @param a
-     * @param b
-     */
-    public static void swap(int[]arr, int a, int b){
-        int temp = arr[a];
-        arr[a] = arr[b];
-        arr[b] = temp;
-    }
 
 }
